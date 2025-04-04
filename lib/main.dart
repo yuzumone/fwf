@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fwf/data/model/shop.dart';
 import 'package:fwf/data/repository/asset_repository.dart';
@@ -11,6 +12,28 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  void _launchUrl(BuildContext context, String link) async {
+    final theme = Theme.of(context);
+    try {
+      await launchUrl(
+        Uri.parse(link),
+        customTabsOptions: CustomTabsOptions(
+          colorSchemes: CustomTabsColorSchemes.defaults(
+            toolbarColor: theme.colorScheme.surface,
+          ),
+          shareState: CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
+          closeButton: CustomTabsCloseButton(
+            icon: CustomTabsCloseButtonIcons.back,
+          ),
+        ),
+      );
+    } catch (e) {
+      // TODO
+    }
+  }
+
   List<Widget> createStickeyList(BuildContext context, List<Shop> shops) {
     final List<Widget> widgets = [];
     for (var shop in shops) {
@@ -26,7 +49,7 @@ class MyApp extends StatelessWidget {
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, i) => ListTile(
-                onTap: () {},
+                onTap: () => _launchUrl(context, shop.menus[i].link),
                 leading: Image.memory(base64Decode(shop.menus[i].image)),
                 title: Text(shop.menus[i].name),
                 subtitle: Column(
