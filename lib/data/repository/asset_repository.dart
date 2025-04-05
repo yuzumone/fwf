@@ -14,19 +14,6 @@ AssetRepositoryBase assetRepository(Ref ref) {
   return AssetRepository();
 }
 
-@riverpod
-Future<List<Event>> events(Ref ref) async {
-  final repository = ref.read(assetRepositoryProvider);
-  return repository.getEvents();
-}
-
-@riverpod
-Future<List<Shop>> shops(Ref ref) async {
-  final repository = ref.read(assetRepositoryProvider);
-  final events = await ref.watch(eventsProvider.future);
-  return repository.getShops(events[0].file);
-}
-
 abstract interface class AssetRepositoryBase {
   Future<List<Event>> getEvents();
   Future<List<Shop>> getShops(String file);
