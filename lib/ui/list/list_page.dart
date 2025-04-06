@@ -1,36 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:fwf/data/model/shop.dart';
+import 'package:fwf/util.dart';
 
 class ListPage extends StatelessWidget {
   final List<Shop> shops;
 
   ListPage({Key? key, required this.shops}) : super(key: key);
-
-  void _launchUrl(BuildContext context, String link) async {
-    final theme = Theme.of(context);
-    try {
-      await launchUrl(
-        Uri.parse(link),
-        customTabsOptions: CustomTabsOptions(
-          colorSchemes: CustomTabsColorSchemes.defaults(
-            toolbarColor: theme.colorScheme.surface,
-          ),
-          shareState: CustomTabsShareState.on,
-          urlBarHidingEnabled: true,
-          showTitle: true,
-          closeButton: CustomTabsCloseButton(
-            icon: CustomTabsCloseButtonIcons.back,
-          ),
-        ),
-      );
-    } catch (e) {
-      // TODO
-    }
-  }
 
   List<Widget> _createStickeyList(BuildContext context, List<Shop> shops) {
     final List<Widget> widgets = [];
@@ -47,7 +25,7 @@ class ListPage extends StatelessWidget {
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, i) => ListTile(
-                onTap: () => _launchUrl(context, shop.menus[i].link),
+                onTap: () => openCustomTab(context, shop.menus[i].link),
                 leading: Image.memory(base64Decode(shop.menus[i].image)),
                 title: Text(shop.menus[i].name),
                 subtitle: Column(

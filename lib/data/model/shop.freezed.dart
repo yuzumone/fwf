@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Shop {
 
- String get name; List<Menu> get menus;
+ String get name; String get aria; double get lat; double get lng; List<Menu> get menus;
 /// Create a copy of Shop
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $ShopCopyWith<Shop> get copyWith => _$ShopCopyWithImpl<Shop>(this as Shop, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Shop&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.menus, menus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Shop&&(identical(other.name, name) || other.name == name)&&(identical(other.aria, aria) || other.aria == aria)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lng, lng) || other.lng == lng)&&const DeepCollectionEquality().equals(other.menus, menus));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,const DeepCollectionEquality().hash(menus));
+int get hashCode => Object.hash(runtimeType,name,aria,lat,lng,const DeepCollectionEquality().hash(menus));
 
 @override
 String toString() {
-  return 'Shop(name: $name, menus: $menus)';
+  return 'Shop(name: $name, aria: $aria, lat: $lat, lng: $lng, menus: $menus)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $ShopCopyWith<$Res>  {
   factory $ShopCopyWith(Shop value, $Res Function(Shop) _then) = _$ShopCopyWithImpl;
 @useResult
 $Res call({
- String name, List<Menu> menus
+ String name, String aria, double lat, double lng, List<Menu> menus
 });
 
 
@@ -66,10 +66,13 @@ class _$ShopCopyWithImpl<$Res>
 
 /// Create a copy of Shop
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? menus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? aria = null,Object? lat = null,Object? lng = null,Object? menus = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,menus: null == menus ? _self.menus : menus // ignore: cast_nullable_to_non_nullable
+as String,aria: null == aria ? _self.aria : aria // ignore: cast_nullable_to_non_nullable
+as String,lat: null == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
+as double,lng: null == lng ? _self.lng : lng // ignore: cast_nullable_to_non_nullable
+as double,menus: null == menus ? _self.menus : menus // ignore: cast_nullable_to_non_nullable
 as List<Menu>,
   ));
 }
@@ -81,10 +84,13 @@ as List<Menu>,
 @JsonSerializable()
 
 class _Shop implements Shop {
-   _Shop({required this.name, required final  List<Menu> menus}): _menus = menus;
+   _Shop({required this.name, required this.aria, required this.lat, required this.lng, required final  List<Menu> menus}): _menus = menus;
   factory _Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);
 
 @override final  String name;
+@override final  String aria;
+@override final  double lat;
+@override final  double lng;
  final  List<Menu> _menus;
 @override List<Menu> get menus {
   if (_menus is EqualUnmodifiableListView) return _menus;
@@ -106,16 +112,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Shop&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._menus, _menus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Shop&&(identical(other.name, name) || other.name == name)&&(identical(other.aria, aria) || other.aria == aria)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lng, lng) || other.lng == lng)&&const DeepCollectionEquality().equals(other._menus, _menus));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,const DeepCollectionEquality().hash(_menus));
+int get hashCode => Object.hash(runtimeType,name,aria,lat,lng,const DeepCollectionEquality().hash(_menus));
 
 @override
 String toString() {
-  return 'Shop(name: $name, menus: $menus)';
+  return 'Shop(name: $name, aria: $aria, lat: $lat, lng: $lng, menus: $menus)';
 }
 
 
@@ -126,7 +132,7 @@ abstract mixin class _$ShopCopyWith<$Res> implements $ShopCopyWith<$Res> {
   factory _$ShopCopyWith(_Shop value, $Res Function(_Shop) _then) = __$ShopCopyWithImpl;
 @override @useResult
 $Res call({
- String name, List<Menu> menus
+ String name, String aria, double lat, double lng, List<Menu> menus
 });
 
 
@@ -143,10 +149,13 @@ class __$ShopCopyWithImpl<$Res>
 
 /// Create a copy of Shop
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? menus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? aria = null,Object? lat = null,Object? lng = null,Object? menus = null,}) {
   return _then(_Shop(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,menus: null == menus ? _self._menus : menus // ignore: cast_nullable_to_non_nullable
+as String,aria: null == aria ? _self.aria : aria // ignore: cast_nullable_to_non_nullable
+as String,lat: null == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
+as double,lng: null == lng ? _self.lng : lng // ignore: cast_nullable_to_non_nullable
+as double,menus: null == menus ? _self._menus : menus // ignore: cast_nullable_to_non_nullable
 as List<Menu>,
   ));
 }
