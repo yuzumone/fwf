@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_cache/flutter_map_cache.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fwf/data/model/menu.dart';
 import 'package:fwf/data/model/shop.dart';
+import 'package:fwf/ui/map/map_notifier.dart';
 import 'package:fwf/util.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -105,21 +109,44 @@ class MapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterMap(
-      options: MapOptions(
-        initialCenter: const LatLng(35.629498, 139.8810311),
-        initialZoom: 16.0,
-      ),
-      children: [
-        TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.jp/{z}/{x}/{y}.png',
-        ),
-        RichAttributionWidget(
-          animationConfig: const ScaleRAWA(),
-          attributions: [TextSourceAttribution('OpenStreetMap contributors')],
-        ),
-        MarkerLayer(markers: _createMarker(context, shops)),
-      ],
+    return Consumer(
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        final controller = ref.read(mapNotifierProvider.select((v) => v.controller));
+        final databasePath = ref.watch(mapNotifierProvider.select((v) => v.databasePath));
+
+        return Center(
+          child: switch(databasePath) {
+            AsyncData(:final value) => FlutterMap(
+              mapController: controller,
+              options: MapOptions(
+                initialCenter: const LatLng(35.629498, 139.8810311),
+                initialZoom: 16.0,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.jp/{z}/{x}/{y}.png',
+                  tileProvider: CachedTileProvider(
+                    maxStale: const Duration(days: 60),
+                    store: HiveCacheStore(
+                      value,
+                      hiveBoxName: 'HiveCacheStore',
+                    ),
+                  ),
+                ),
+                RichAttributionWidget(
+                  animationConfig: const ScaleRAWA(),
+                  attributions: [
+                    TextSourceAttribution('OpenStreetMap contributors'),
+                  ],
+                ),
+                MarkerLayer(markers: _createMarker(context, shops)),
+              ],
+            ),
+            AsyncError() => const Text('Oops, something unexpected happened'),
+            _ => const CircularProgressIndicator(),
+          }
+        );
+      },
     );
   }
 }
