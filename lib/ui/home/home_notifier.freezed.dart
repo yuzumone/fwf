@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- int get pageIndex; List<Event> get events; AsyncValue<List<Shop>> get shops; Event? get selectedEvent;
+ int get pageIndex; List<Event> get events; AsyncValue<List<Shop>> get shops; bool get enableAd; Event? get selectedEvent; BannerAd? get bannerAd;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.pageIndex, pageIndex) || other.pageIndex == pageIndex)&&const DeepCollectionEquality().equals(other.events, events)&&(identical(other.shops, shops) || other.shops == shops)&&(identical(other.selectedEvent, selectedEvent) || other.selectedEvent == selectedEvent));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.pageIndex, pageIndex) || other.pageIndex == pageIndex)&&const DeepCollectionEquality().equals(other.events, events)&&(identical(other.shops, shops) || other.shops == shops)&&(identical(other.enableAd, enableAd) || other.enableAd == enableAd)&&(identical(other.selectedEvent, selectedEvent) || other.selectedEvent == selectedEvent)&&(identical(other.bannerAd, bannerAd) || other.bannerAd == bannerAd));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,pageIndex,const DeepCollectionEquality().hash(events),shops,selectedEvent);
+int get hashCode => Object.hash(runtimeType,pageIndex,const DeepCollectionEquality().hash(events),shops,enableAd,selectedEvent,bannerAd);
 
 @override
 String toString() {
-  return 'HomeState(pageIndex: $pageIndex, events: $events, shops: $shops, selectedEvent: $selectedEvent)';
+  return 'HomeState(pageIndex: $pageIndex, events: $events, shops: $shops, enableAd: $enableAd, selectedEvent: $selectedEvent, bannerAd: $bannerAd)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- int pageIndex, List<Event> events, AsyncValue<List<Shop>> shops, Event? selectedEvent
+ int pageIndex, List<Event> events, AsyncValue<List<Shop>> shops, bool enableAd, Event? selectedEvent, BannerAd? bannerAd
 });
 
 
@@ -63,13 +63,15 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? pageIndex = null,Object? events = null,Object? shops = null,Object? selectedEvent = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? pageIndex = null,Object? events = null,Object? shops = null,Object? enableAd = null,Object? selectedEvent = freezed,Object? bannerAd = freezed,}) {
   return _then(_self.copyWith(
 pageIndex: null == pageIndex ? _self.pageIndex : pageIndex // ignore: cast_nullable_to_non_nullable
 as int,events: null == events ? _self.events : events // ignore: cast_nullable_to_non_nullable
 as List<Event>,shops: null == shops ? _self.shops : shops // ignore: cast_nullable_to_non_nullable
-as AsyncValue<List<Shop>>,selectedEvent: freezed == selectedEvent ? _self.selectedEvent : selectedEvent // ignore: cast_nullable_to_non_nullable
-as Event?,
+as AsyncValue<List<Shop>>,enableAd: null == enableAd ? _self.enableAd : enableAd // ignore: cast_nullable_to_non_nullable
+as bool,selectedEvent: freezed == selectedEvent ? _self.selectedEvent : selectedEvent // ignore: cast_nullable_to_non_nullable
+as Event?,bannerAd: freezed == bannerAd ? _self.bannerAd : bannerAd // ignore: cast_nullable_to_non_nullable
+as BannerAd?,
   ));
 }
 /// Create a copy of HomeState
@@ -92,7 +94,7 @@ $EventCopyWith<$Res>? get selectedEvent {
 
 
 class _HomeState implements HomeState {
-  const _HomeState({this.pageIndex = 0, final  List<Event> events = const <Event>[], this.shops = const AsyncValue<List<Shop>>.loading(), this.selectedEvent}): _events = events;
+  const _HomeState({this.pageIndex = 0, final  List<Event> events = const <Event>[], this.shops = const AsyncValue<List<Shop>>.loading(), this.enableAd = true, this.selectedEvent, this.bannerAd}): _events = events;
   
 
 @override@JsonKey() final  int pageIndex;
@@ -104,7 +106,9 @@ class _HomeState implements HomeState {
 }
 
 @override@JsonKey() final  AsyncValue<List<Shop>> shops;
+@override@JsonKey() final  bool enableAd;
 @override final  Event? selectedEvent;
+@override final  BannerAd? bannerAd;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -116,16 +120,16 @@ _$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.pageIndex, pageIndex) || other.pageIndex == pageIndex)&&const DeepCollectionEquality().equals(other._events, _events)&&(identical(other.shops, shops) || other.shops == shops)&&(identical(other.selectedEvent, selectedEvent) || other.selectedEvent == selectedEvent));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.pageIndex, pageIndex) || other.pageIndex == pageIndex)&&const DeepCollectionEquality().equals(other._events, _events)&&(identical(other.shops, shops) || other.shops == shops)&&(identical(other.enableAd, enableAd) || other.enableAd == enableAd)&&(identical(other.selectedEvent, selectedEvent) || other.selectedEvent == selectedEvent)&&(identical(other.bannerAd, bannerAd) || other.bannerAd == bannerAd));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,pageIndex,const DeepCollectionEquality().hash(_events),shops,selectedEvent);
+int get hashCode => Object.hash(runtimeType,pageIndex,const DeepCollectionEquality().hash(_events),shops,enableAd,selectedEvent,bannerAd);
 
 @override
 String toString() {
-  return 'HomeState(pageIndex: $pageIndex, events: $events, shops: $shops, selectedEvent: $selectedEvent)';
+  return 'HomeState(pageIndex: $pageIndex, events: $events, shops: $shops, enableAd: $enableAd, selectedEvent: $selectedEvent, bannerAd: $bannerAd)';
 }
 
 
@@ -136,7 +140,7 @@ abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Re
   factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- int pageIndex, List<Event> events, AsyncValue<List<Shop>> shops, Event? selectedEvent
+ int pageIndex, List<Event> events, AsyncValue<List<Shop>> shops, bool enableAd, Event? selectedEvent, BannerAd? bannerAd
 });
 
 
@@ -153,13 +157,15 @@ class __$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? pageIndex = null,Object? events = null,Object? shops = null,Object? selectedEvent = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? pageIndex = null,Object? events = null,Object? shops = null,Object? enableAd = null,Object? selectedEvent = freezed,Object? bannerAd = freezed,}) {
   return _then(_HomeState(
 pageIndex: null == pageIndex ? _self.pageIndex : pageIndex // ignore: cast_nullable_to_non_nullable
 as int,events: null == events ? _self._events : events // ignore: cast_nullable_to_non_nullable
 as List<Event>,shops: null == shops ? _self.shops : shops // ignore: cast_nullable_to_non_nullable
-as AsyncValue<List<Shop>>,selectedEvent: freezed == selectedEvent ? _self.selectedEvent : selectedEvent // ignore: cast_nullable_to_non_nullable
-as Event?,
+as AsyncValue<List<Shop>>,enableAd: null == enableAd ? _self.enableAd : enableAd // ignore: cast_nullable_to_non_nullable
+as bool,selectedEvent: freezed == selectedEvent ? _self.selectedEvent : selectedEvent // ignore: cast_nullable_to_non_nullable
+as Event?,bannerAd: freezed == bannerAd ? _self.bannerAd : bannerAd // ignore: cast_nullable_to_non_nullable
+as BannerAd?,
   ));
 }
 

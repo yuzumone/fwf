@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fwf/ui/home/home_notifier.dart';
 import 'package:fwf/ui/list/list_page.dart';
 import 'package:fwf/ui/map/map_page.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 const _legalease = '''このアプリは株式会社オリエンタルランドまたウォルト・ディズニー・カンパニーとは関係がありません。
@@ -18,7 +19,8 @@ class HomePage extends ConsumerWidget {
     final pageIndex = ref.watch(
       homeNotifierProvider.select((v) => v.pageIndex),
     );
-    final events = ref.watch(homeNotifierProvider.select((v) => v.events));
+    final ad = ref.watch(homeNotifierProvider.select((v) => v.bannerAd));
+    final enableAd = ref.watch(homeNotifierProvider.select((v) => v.enableAd));
     final shops = ref.watch(homeNotifierProvider.select((v) => v.shops));
 
     return MaterialApp(
@@ -52,15 +54,32 @@ class HomePage extends ConsumerWidget {
             ),
           ],
         ),
-        body: switch (shops) {
-          AsyncData(:final value) => switch (pageIndex) {
-            0 => ListPage(shops: value),
-            1 => MapPage(shops: value),
-            _ => Container(),
-          },
-          AsyncError(:final error) => Text(error.toString()),
-          _ => const CircularProgressIndicator(),
-        },
+        body: Column(
+          children: [
+            Expanded(
+              child: switch (shops) {
+                AsyncData(:final value) => switch (pageIndex) {
+                  0 => ListPage(shops: value),
+                  1 => MapPage(shops: value),
+                  _ => Container(),
+                },
+                AsyncError(:final error) => Text(error.toString()),
+                _ => const CircularProgressIndicator(),
+              },
+            ),
+            Visibility(
+              visible: enableAd,
+              child:
+                  ad != null
+                      ? SizedBox(
+                        height: ad.size.height.toDouble(),
+                        width: ad.size.width.toDouble(),
+                        child: AdWidget(ad: ad),
+                      )
+                      : SizedBox(height: 50.0),
+            ),
+          ],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: Icon(Icons.list), label: 'List'),

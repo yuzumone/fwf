@@ -111,11 +111,15 @@ class MapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final controller = ref.read(mapNotifierProvider.select((v) => v.controller));
-        final databasePath = ref.watch(mapNotifierProvider.select((v) => v.databasePath));
+        final controller = ref.read(
+          mapNotifierProvider.select((v) => v.controller),
+        );
+        final databasePath = ref.watch(
+          mapNotifierProvider.select((v) => v.databasePath),
+        );
 
         return Center(
-          child: switch(databasePath) {
+          child: switch (databasePath) {
             AsyncData(:final value) => FlutterMap(
               mapController: controller,
               options: MapOptions(
@@ -127,10 +131,7 @@ class MapPage extends StatelessWidget {
                   urlTemplate: 'https://tile.openstreetmap.jp/{z}/{x}/{y}.png',
                   tileProvider: CachedTileProvider(
                     maxStale: const Duration(days: 60),
-                    store: HiveCacheStore(
-                      value,
-                      hiveBoxName: 'HiveCacheStore',
-                    ),
+                    store: HiveCacheStore(value, hiveBoxName: 'HiveCacheStore'),
                   ),
                 ),
                 RichAttributionWidget(
@@ -144,7 +145,7 @@ class MapPage extends StatelessWidget {
             ),
             AsyncError() => const Text('Oops, something unexpected happened'),
             _ => const CircularProgressIndicator(),
-          }
+          },
         );
       },
     );
