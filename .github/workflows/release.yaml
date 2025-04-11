@@ -1,0 +1,42 @@
+name: release
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true && contains(github.head_ref, 'release')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
+      - name: pub get
+        run: flutter pub get
+      - run: echo "${{secrets.ANDROID_RELEASE_BASE64_KEY}}" | base64 -d > ./keystore.jks
+      - run: echo "keyAlias=keystore" >> android/keystore.properties
+      - run: echo "keyPassword=${{secrets.ANDROID_RELEASE_KEY_PASSWORD}}" >> android/keystore.properties
+      - run: echo "storeFile=`pwd`/keystore.jks" >> android/keystore.properties
+      - run: echo "storePassword=${{secrets.ANDROID_RELEASE_STORE_PASSWORD}}" >> android/keystore.properties
+      - run: echo "adsApplicationId=${{secrets.ADS_APPLICATION_ID}}" >> android/application.properties
+      - name: build apk
+        run: flutter build apk --release --dart-define=BANNER_ADUNIT_ID=${{secrets.BANNER_ADUNIT_ID}}
+      - name: version
+        id: tag
+        run: |
+          echo ::set-output name=tag::$(grep '##' CHANGELOG.md | head -n1 | cut -d ' ' -f2)
+      - name: changelog
+        id: changelog
+        run: |
+          cat CHANGELOG.md | sed -n -e '1,/^$/p' | sed -e '/^#/d' -e '/^$/d' > ${{github.workspace}}-note.txt
+      - name: release note
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{steps.tag.outputs.tag}}
+          name: ${{steps.tag.outputs.tag}}
+          body_path: ${{github.workspace}}-note.txt
+          draft: false
+          prerelease: false
+          files: |
+            build/app/outputs/flutter-apk/app-release.apk
