@@ -48,10 +48,6 @@ class ListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Localizations.override(
-      context: context,
-      locale: const Locale('ja', 'JP'),
-      child: CustomScrollView(slivers: _createStickeyList(context, shops)),
-    );
+    return CustomScrollView(slivers: _createStickeyList(context, shops));
   }
 }

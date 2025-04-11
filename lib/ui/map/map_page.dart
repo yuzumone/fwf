@@ -17,37 +17,33 @@ class MapPage extends StatelessWidget {
   MapPage({Key? key, required this.shops}) : super(key: key);
 
   Widget _createListItem(BuildContext context, Menu menu) {
-    return Localizations.override(
-      context: context,
-      locale: const Locale('ja', 'JP'),
-      child: InkWell(
-        onTap: () => openCustomTab(context, menu.link),
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            spacing: 16.0,
-            children: [
-              Flexible(flex: 1, child: Image.memory(base64Decode(menu.image))),
-              Flexible(
-                flex: 4,
-                child: Column(
-                  spacing: 4.0,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(menu.name),
-                    Text(
-                      menu.text.trim(),
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    Text(
-                      '¥${menu.value}',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
+    return InkWell(
+      onTap: () => openCustomTab(context, menu.link),
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          spacing: 16.0,
+          children: [
+            Flexible(flex: 1, child: Image.memory(base64Decode(menu.image))),
+            Flexible(
+              flex: 4,
+              child: Column(
+                spacing: 4.0,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(menu.name),
+                  Text(
+                    menu.text.trim(),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  Text(
+                    '¥${menu.value}',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -122,37 +118,33 @@ class MapPage extends StatelessWidget {
           mapNotifierProvider.select((v) => v.databasePath),
         );
 
-        return Localizations.override(
-          context: context,
-          locale: const Locale('ja', 'JP'),
-          child: switch (databasePath) {
-            AsyncData(:final value) => FlutterMap(
-              mapController: controller,
-              options: MapOptions(
-                initialCenter: const LatLng(35.629498, 139.8810311),
-                initialZoom: 16.0,
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.jp/{z}/{x}/{y}.png',
-                  tileProvider: CachedTileProvider(
-                    maxStale: const Duration(days: 60),
-                    store: HiveCacheStore(value, hiveBoxName: 'HiveCacheStore'),
-                  ),
-                ),
-                RichAttributionWidget(
-                  animationConfig: const ScaleRAWA(),
-                  attributions: [
-                    TextSourceAttribution('OpenStreetMap contributors'),
-                  ],
-                ),
-                MarkerLayer(markers: _createMarker(context, shops)),
-              ],
+        return switch (databasePath) {
+          AsyncData(:final value) => FlutterMap(
+            mapController: controller,
+            options: MapOptions(
+              initialCenter: const LatLng(35.629498, 139.8810311),
+              initialZoom: 16.0,
             ),
-            AsyncError() => const Text('Oops, something unexpected happened'),
-            _ => const CircularProgressIndicator(),
-          },
-        );
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.jp/{z}/{x}/{y}.png',
+                tileProvider: CachedTileProvider(
+                  maxStale: const Duration(days: 60),
+                  store: HiveCacheStore(value, hiveBoxName: 'HiveCacheStore'),
+                ),
+              ),
+              RichAttributionWidget(
+                animationConfig: const ScaleRAWA(),
+                attributions: [
+                  TextSourceAttribution('OpenStreetMap contributors'),
+                ],
+              ),
+              MarkerLayer(markers: _createMarker(context, shops)),
+            ],
+          ),
+          AsyncError() => const Text('Oops, something unexpected happened'),
+          _ => const CircularProgressIndicator(),
+        };
       },
     );
   }
