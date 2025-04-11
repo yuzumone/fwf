@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fwf/ui/home/home_notifier.dart';
 import 'package:fwf/ui/list/list_page.dart';
 import 'package:fwf/ui/map/map_page.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:fwf/ui/widget/admob_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 const _legalease = '''このアプリは株式会社オリエンタルランドまたウォルト・ディズニー・カンパニーとは関係がありません。
@@ -19,8 +19,6 @@ class HomePage extends ConsumerWidget {
     final pageIndex = ref.watch(
       homeNotifierProvider.select((v) => v.pageIndex),
     );
-    final ad = ref.watch(homeNotifierProvider.select((v) => v.bannerAd));
-    final enableAd = ref.watch(homeNotifierProvider.select((v) => v.enableAd));
     final shops = ref.watch(homeNotifierProvider.select((v) => v.shops));
 
     return Scaffold(
@@ -60,17 +58,7 @@ class HomePage extends ConsumerWidget {
               _ => const CircularProgressIndicator(),
             },
           ),
-          Visibility(
-            visible: enableAd,
-            child:
-                ad != null
-                    ? SizedBox(
-                      height: ad.size.height.toDouble(),
-                      width: ad.size.width.toDouble(),
-                      child: AdWidget(ad: ad),
-                    )
-                    : SizedBox(height: 50.0),
-          ),
+          AdmobWidget(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
