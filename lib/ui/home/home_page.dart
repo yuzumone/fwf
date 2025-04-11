@@ -58,11 +58,10 @@ class HomePage extends ConsumerWidget {
           children: [
             Expanded(
               child: switch (shops) {
-                AsyncData(:final value) => switch (pageIndex) {
-                  0 => ListPage(shops: value),
-                  1 => MapPage(shops: value),
-                  _ => Container(),
-                },
+                AsyncData(:final value) => IndexedStack(
+                  index: pageIndex,
+                  children: [ListPage(shops: value), MapPage(shops: value)],
+                ),
                 AsyncError(:final error) => Text(error.toString()),
                 _ => const CircularProgressIndicator(),
               },

@@ -17,33 +17,37 @@ class MapPage extends StatelessWidget {
   MapPage({Key? key, required this.shops}) : super(key: key);
 
   Widget _createListItem(BuildContext context, Menu menu) {
-    return InkWell(
-      onTap: () => openCustomTab(context, menu.link),
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          spacing: 16.0,
-          children: [
-            Flexible(flex: 1, child: Image.memory(base64Decode(menu.image))),
-            Flexible(
-              flex: 4,
-              child: Column(
-                spacing: 4.0,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(menu.name),
-                  Text(
-                    menu.text.trim(),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  Text(
-                    '¥${menu.value}',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
+    return Localizations.override(
+      context: context,
+      locale: const Locale('ja', 'JP'),
+      child: InkWell(
+        onTap: () => openCustomTab(context, menu.link),
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            spacing: 16.0,
+            children: [
+              Flexible(flex: 1, child: Image.memory(base64Decode(menu.image))),
+              Flexible(
+                flex: 4,
+                child: Column(
+                  spacing: 4.0,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(menu.name),
+                    Text(
+                      menu.text.trim(),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    Text(
+                      '¥${menu.value}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -118,7 +122,9 @@ class MapPage extends StatelessWidget {
           mapNotifierProvider.select((v) => v.databasePath),
         );
 
-        return Center(
+        return Localizations.override(
+          context: context,
+          locale: const Locale('ja', 'JP'),
           child: switch (databasePath) {
             AsyncData(:final value) => FlutterMap(
               mapController: controller,
