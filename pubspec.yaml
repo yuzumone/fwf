@@ -1,6 +1,6 @@
 name: fwf
 description: Maihama Food Guide App
-version: 0.0.2-dev
+version: 0.0.2
 
 environment:
   sdk: ^3.7.2
