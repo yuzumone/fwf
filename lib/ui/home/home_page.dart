@@ -19,6 +19,7 @@ class HomePage extends ConsumerWidget {
     final pageIndex = ref.watch(
       homeNotifierProvider.select((v) => v.pageIndex),
     );
+    final events = ref.watch(homeNotifierProvider.select((v) => v.events));
     final shops = ref.watch(homeNotifierProvider.select((v) => v.shops));
 
     return Scaffold(
@@ -26,23 +27,47 @@ class HomePage extends ConsumerWidget {
         title: const Text('Maihama Food Guide'),
         actions: [
           PopupMenuButton(
-            onSelected: (_) {
-              PackageInfo.fromPlatform().then(
-                (value) => showAboutDialog(
-                  context: context,
-                  applicationName: value.appName,
-                  applicationVersion: value.version,
-                  applicationIcon: SvgPicture.asset(
-                    'assets/icon.svg',
-                    width: 48.0,
-                    height: 48.0,
+            onSelected:
+                (selected) => switch (selected) {
+                  0 => showDialog(
+                    context: context,
+                    builder:
+                        (BuildContext ctx) => SimpleDialog(
+                          title: const Text('Select evnet'),
+                          children:
+                              events
+                                  .map(
+                                    (e) => SimpleDialogOption(
+                                      child: Text(e.name),
+                                      onPressed: () {
+                                        notifier.updateSelectedEvent(e);
+                                        Navigator.of(ctx).pop();
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                        ),
                   ),
-                  applicationLegalese: _legalease,
-                ),
-              );
-            },
+                  1 => PackageInfo.fromPlatform().then(
+                    (value) => showAboutDialog(
+                      context: context,
+                      applicationName: value.appName,
+                      applicationVersion: value.version,
+                      applicationIcon: SvgPicture.asset(
+                        'assets/icon.svg',
+                        width: 48.0,
+                        height: 48.0,
+                      ),
+                      applicationLegalese: _legalease,
+                    ),
+                  ),
+                  _ => (),
+                },
             itemBuilder:
-                (_) => const [PopupMenuItem(value: 0, child: Text('License'))],
+                (_) => const [
+                  PopupMenuItem(value: 0, child: Text('イベント選択')),
+                  PopupMenuItem(value: 1, child: Text('License')),
+                ],
           ),
         ],
       ),
