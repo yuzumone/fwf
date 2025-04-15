@@ -40,4 +40,10 @@ class HomeNotifier extends _$HomeNotifier {
   void updateIndex(int index) {
     state = state.copyWith(pageIndex: index);
   }
+
+  void updateSelectedEvent(Event event) async {
+    final repository = ref.read(assetRepositoryProvider);
+    final shops = await repository.getShops(event.file);
+    state = state.copyWith(selectedEvent: event, shops: AsyncValue.data(shops));
+  }
 }
