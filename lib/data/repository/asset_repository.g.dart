@@ -6,24 +6,52 @@ part of 'asset_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$assetRepositoryHash() => r'22a4c6bc7590587a4ec3701c3b7066f750aac298';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [assetRepository].
 @ProviderFor(assetRepository)
-final assetRepositoryProvider =
-    AutoDisposeProvider<AssetRepositoryBase>.internal(
-      assetRepository,
-      name: r'assetRepositoryProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$assetRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final assetRepositoryProvider = AssetRepositoryProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AssetRepositoryRef = AutoDisposeProviderRef<AssetRepositoryBase>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class AssetRepositoryProvider
+    extends
+        $FunctionalProvider<
+          AssetRepositoryBase,
+          AssetRepositoryBase,
+          AssetRepositoryBase
+        >
+    with $Provider<AssetRepositoryBase> {
+  AssetRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'assetRepositoryProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$assetRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<AssetRepositoryBase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AssetRepositoryBase create(Ref ref) {
+    return assetRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AssetRepositoryBase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AssetRepositoryBase>(value),
+    );
+  }
+}
+
+String _$assetRepositoryHash() => r'22a4c6bc7590587a4ec3701c3b7066f750aac298';
