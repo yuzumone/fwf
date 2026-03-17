@@ -90,14 +90,11 @@ class MapPage extends StatelessWidget {
           point: LatLng(s.lat, s.lng),
           child: GestureDetector(
             child: Row(
-              children:
-                  s.menus
-                      .map(
-                        (m) => Expanded(
-                          child: Image.memory(base64Decode(m.image)),
-                        ),
-                      )
-                      .toList(),
+              children: s.menus
+                  .map(
+                    (m) => Expanded(child: Image.memory(base64Decode(m.image))),
+                  )
+                  .toList(),
             ),
             onTap: () => _showModalBottomSheet(context, s),
           ),
@@ -111,11 +108,9 @@ class MapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final controller = ref.read(
-          mapNotifierProvider.select((v) => v.controller),
-        );
+        final controller = ref.read(mapProvider.select((v) => v.controller));
         final databasePath = ref.watch(
-          mapNotifierProvider.select((v) => v.databasePath),
+          mapProvider.select((v) => v.databasePath),
         );
 
         return switch (databasePath) {
