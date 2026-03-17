@@ -10,28 +10,28 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: ^2.6.1
+  flutter_riverpod: ^3.1.0
   json_serializable: ^6.9.4
-  riverpod_annotation: ^2.6.1
+  riverpod_annotation: ^4.0.0
   yaml: ^3.1.3
-  flutter_sticky_header: ^0.7.0
+  flutter_sticky_header: ^0.8.0
   flutter_custom_tabs: ^2.2.1
   flutter_map: ^8.1.1
   latlong2: ^0.9.1
   flutter_map_cache: ^1.5.2
   path_provider: ^2.1.5
-  dio_cache_interceptor_hive_store: ^3.2.2
+  dio_cache_interceptor_hive_store: ^4.0.0
   flutter_svg: ^2.0.17
-  package_info_plus: ^8.3.0
-  google_mobile_ads: ^6.0.0
+  package_info_plus: ^9.0.0
+  google_mobile_ads: ^7.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
   custom_lint:
-  riverpod_generator: ^2.6.5
-  riverpod_lint: ^2.6.5
+  riverpod_generator: ^4.0.0+1
+  riverpod_lint: ^3.1.0
   freezed: ^3.0.4
   mocktail: ^1.0.4
   flutter_launcher_icons: ^0.14.3
