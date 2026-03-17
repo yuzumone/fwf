@@ -54,20 +54,17 @@ class AdmobWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final ad = ref.watch(adNotifierProvider.select((v) => v.bannerAd));
-        final enableAd = ref.watch(
-          adNotifierProvider.select((v) => v.enableAd),
-        );
+        final ad = ref.watch(adProvider.select((v) => v.bannerAd));
+        final enableAd = ref.watch(adProvider.select((v) => v.enableAd));
         return Visibility(
           visible: enableAd,
-          child:
-              ad != null
-                  ? SizedBox(
-                    height: ad.size.height.toDouble(),
-                    width: ad.size.width.toDouble(),
-                    child: AdWidget(ad: ad),
-                  )
-                  : SizedBox(height: 50.0),
+          child: ad != null
+              ? SizedBox(
+                  height: ad.size.height.toDouble(),
+                  width: ad.size.width.toDouble(),
+                  child: AdWidget(ad: ad),
+                )
+              : SizedBox(height: 50.0),
         );
       },
     );

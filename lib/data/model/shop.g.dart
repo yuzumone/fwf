@@ -11,10 +11,9 @@ _Shop _$ShopFromJson(Map<String, dynamic> json) => _Shop(
   aria: json['aria'] as String,
   lat: (json['lat'] as num).toDouble(),
   lng: (json['lng'] as num).toDouble(),
-  menus:
-      (json['menus'] as List<dynamic>)
-          .map((e) => Menu.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  menus: (json['menus'] as List<dynamic>)
+      .map((e) => Menu.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$ShopToJson(_Shop instance) => <String, dynamic>{

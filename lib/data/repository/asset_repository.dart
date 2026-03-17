@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fwf/data/model/event.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:fwf/data/model/shop.dart';

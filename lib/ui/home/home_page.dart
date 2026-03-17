@@ -15,59 +15,53 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(homeNotifierProvider.notifier);
-    final pageIndex = ref.watch(
-      homeNotifierProvider.select((v) => v.pageIndex),
-    );
-    final events = ref.watch(homeNotifierProvider.select((v) => v.events));
-    final shops = ref.watch(homeNotifierProvider.select((v) => v.shops));
+    final notifier = ref.watch(homeProvider.notifier);
+    final pageIndex = ref.watch(homeProvider.select((v) => v.pageIndex));
+    final events = ref.watch(homeProvider.select((v) => v.events));
+    final shops = ref.watch(homeProvider.select((v) => v.shops));
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Maihama Food Guide'),
         actions: [
           PopupMenuButton(
-            onSelected:
-                (selected) => switch (selected) {
-                  0 => showDialog(
-                    context: context,
-                    builder:
-                        (BuildContext ctx) => SimpleDialog(
-                          title: const Text('Select evnet'),
-                          children:
-                              events
-                                  .map(
-                                    (e) => SimpleDialogOption(
-                                      child: Text(e.name),
-                                      onPressed: () {
-                                        notifier.updateSelectedEvent(e);
-                                        Navigator.of(ctx).pop();
-                                      },
-                                    ),
-                                  )
-                                  .toList(),
+            onSelected: (selected) => switch (selected) {
+              0 => showDialog(
+                context: context,
+                builder: (BuildContext ctx) => SimpleDialog(
+                  title: const Text('Select evnet'),
+                  children: events
+                      .map(
+                        (e) => SimpleDialogOption(
+                          child: Text(e.name),
+                          onPressed: () {
+                            notifier.updateSelectedEvent(e);
+                            Navigator.of(ctx).pop();
+                          },
                         ),
+                      )
+                      .toList(),
+                ),
+              ),
+              1 => PackageInfo.fromPlatform().then(
+                (value) => showAboutDialog(
+                  context: context,
+                  applicationName: value.appName,
+                  applicationVersion: value.version,
+                  applicationIcon: SvgPicture.asset(
+                    'assets/icon.svg',
+                    width: 48.0,
+                    height: 48.0,
                   ),
-                  1 => PackageInfo.fromPlatform().then(
-                    (value) => showAboutDialog(
-                      context: context,
-                      applicationName: value.appName,
-                      applicationVersion: value.version,
-                      applicationIcon: SvgPicture.asset(
-                        'assets/icon.svg',
-                        width: 48.0,
-                        height: 48.0,
-                      ),
-                      applicationLegalese: _legalease,
-                    ),
-                  ),
-                  _ => (),
-                },
-            itemBuilder:
-                (_) => const [
-                  PopupMenuItem(value: 0, child: Text('イベント選択')),
-                  PopupMenuItem(value: 1, child: Text('License')),
-                ],
+                  applicationLegalese: _legalease,
+                ),
+              ),
+              _ => (),
+            },
+            itemBuilder: (_) => const [
+              PopupMenuItem(value: 0, child: Text('イベント選択')),
+              PopupMenuItem(value: 1, child: Text('License')),
+            ],
           ),
         ],
       ),
@@ -77,7 +71,10 @@ class HomePage extends ConsumerWidget {
             child: switch (shops) {
               AsyncData(:final value) => IndexedStack(
                 index: pageIndex,
-                children: [ListPage(shops: value), MapPage(shops: value)],
+                children: [
+                  ListPage(shops: value),
+                  MapPage(shops: value),
+                ],
               ),
               AsyncError(:final error) => Text(error.toString()),
               _ => const CircularProgressIndicator(),
