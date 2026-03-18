@@ -34,6 +34,12 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="${AD}"/>
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="true" />
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableFlutterGPU"
+            android:value="true" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
