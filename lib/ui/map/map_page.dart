@@ -1,15 +1,14 @@
 import 'dart:convert';
 
-import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_cache/flutter_map_cache.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fwf/data/model/menu.dart';
 import 'package:fwf/data/model/shop.dart';
 import 'package:fwf/ui/map/map_notifier.dart';
 import 'package:fwf/util.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 class MapPage extends StatelessWidget {
   final List<Shop> shops;
@@ -109,11 +108,9 @@ class MapPage extends StatelessWidget {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final controller = ref.read(mapProvider.select((v) => v.controller));
-        final databasePath = ref.watch(
-          mapProvider.select((v) => v.databasePath),
-        );
+        final style = ref.watch(mapProvider.select((v) => v.style));
 
-        return switch (databasePath) {
+        return switch (style) {
           AsyncData(:final value) => FlutterMap(
             mapController: controller,
             options: MapOptions(
@@ -121,12 +118,11 @@ class MapPage extends StatelessWidget {
               initialZoom: 16.0,
             ),
             children: [
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.jp/{z}/{x}/{y}.png',
-                tileProvider: CachedTileProvider(
-                  maxStale: const Duration(days: 60),
-                  store: HiveCacheStore(value, hiveBoxName: 'HiveCacheStore'),
-                ),
+              VectorTileLayer(
+                theme: value.theme,
+                tileOffset: TileOffset.DEFAULT,
+                tileProviders: value.providers,
+                fileCacheTtl: Duration(days: 60),
               ),
               RichAttributionWidget(
                 animationConfig: const ScaleRAWA(),

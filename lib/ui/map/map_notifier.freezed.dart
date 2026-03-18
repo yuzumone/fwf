@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MapState {
 
- MapController? get controller; AsyncValue<String> get databasePath;
+ MapController? get controller; AsyncValue<Style> get style;
 /// Create a copy of MapState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $MapStateCopyWith<MapState> get copyWith => _$MapStateCopyWithImpl<MapState>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MapState&&(identical(other.controller, controller) || other.controller == controller)&&(identical(other.databasePath, databasePath) || other.databasePath == databasePath));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MapState&&(identical(other.controller, controller) || other.controller == controller)&&(identical(other.style, style) || other.style == style));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,controller,databasePath);
+int get hashCode => Object.hash(runtimeType,controller,style);
 
 @override
 String toString() {
-  return 'MapState(controller: $controller, databasePath: $databasePath)';
+  return 'MapState(controller: $controller, style: $style)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $MapStateCopyWith<$Res>  {
   factory $MapStateCopyWith(MapState value, $Res Function(MapState) _then) = _$MapStateCopyWithImpl;
 @useResult
 $Res call({
- MapController? controller, AsyncValue<String> databasePath
+ MapController? controller, AsyncValue<Style> style
 });
 
 
@@ -62,11 +62,11 @@ class _$MapStateCopyWithImpl<$Res>
 
 /// Create a copy of MapState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? controller = freezed,Object? databasePath = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? controller = freezed,Object? style = null,}) {
   return _then(_self.copyWith(
 controller: freezed == controller ? _self.controller : controller // ignore: cast_nullable_to_non_nullable
-as MapController?,databasePath: null == databasePath ? _self.databasePath : databasePath // ignore: cast_nullable_to_non_nullable
-as AsyncValue<String>,
+as MapController?,style: null == style ? _self.style : style // ignore: cast_nullable_to_non_nullable
+as AsyncValue<Style>,
   ));
 }
 
@@ -151,10 +151,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( MapController? controller,  AsyncValue<String> databasePath)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( MapController? controller,  AsyncValue<Style> style)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MapState() when $default != null:
-return $default(_that.controller,_that.databasePath);case _:
+return $default(_that.controller,_that.style);case _:
   return orElse();
 
 }
@@ -172,10 +172,10 @@ return $default(_that.controller,_that.databasePath);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( MapController? controller,  AsyncValue<String> databasePath)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( MapController? controller,  AsyncValue<Style> style)  $default,) {final _that = this;
 switch (_that) {
 case _MapState():
-return $default(_that.controller,_that.databasePath);case _:
+return $default(_that.controller,_that.style);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +192,10 @@ return $default(_that.controller,_that.databasePath);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( MapController? controller,  AsyncValue<String> databasePath)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( MapController? controller,  AsyncValue<Style> style)?  $default,) {final _that = this;
 switch (_that) {
 case _MapState() when $default != null:
-return $default(_that.controller,_that.databasePath);case _:
+return $default(_that.controller,_that.style);case _:
   return null;
 
 }
@@ -207,11 +207,11 @@ return $default(_that.controller,_that.databasePath);case _:
 
 
 class _MapState implements MapState {
-  const _MapState({this.controller, this.databasePath = const AsyncValue<String>.loading()});
+  const _MapState({this.controller, this.style = const AsyncValue<Style>.loading()});
   
 
 @override final  MapController? controller;
-@override@JsonKey() final  AsyncValue<String> databasePath;
+@override@JsonKey() final  AsyncValue<Style> style;
 
 /// Create a copy of MapState
 /// with the given fields replaced by the non-null parameter values.
@@ -223,16 +223,16 @@ _$MapStateCopyWith<_MapState> get copyWith => __$MapStateCopyWithImpl<_MapState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MapState&&(identical(other.controller, controller) || other.controller == controller)&&(identical(other.databasePath, databasePath) || other.databasePath == databasePath));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MapState&&(identical(other.controller, controller) || other.controller == controller)&&(identical(other.style, style) || other.style == style));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,controller,databasePath);
+int get hashCode => Object.hash(runtimeType,controller,style);
 
 @override
 String toString() {
-  return 'MapState(controller: $controller, databasePath: $databasePath)';
+  return 'MapState(controller: $controller, style: $style)';
 }
 
 
@@ -243,7 +243,7 @@ abstract mixin class _$MapStateCopyWith<$Res> implements $MapStateCopyWith<$Res>
   factory _$MapStateCopyWith(_MapState value, $Res Function(_MapState) _then) = __$MapStateCopyWithImpl;
 @override @useResult
 $Res call({
- MapController? controller, AsyncValue<String> databasePath
+ MapController? controller, AsyncValue<Style> style
 });
 
 
@@ -260,11 +260,11 @@ class __$MapStateCopyWithImpl<$Res>
 
 /// Create a copy of MapState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? controller = freezed,Object? databasePath = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? controller = freezed,Object? style = null,}) {
   return _then(_MapState(
 controller: freezed == controller ? _self.controller : controller // ignore: cast_nullable_to_non_nullable
-as MapController?,databasePath: null == databasePath ? _self.databasePath : databasePath // ignore: cast_nullable_to_non_nullable
-as AsyncValue<String>,
+as MapController?,style: null == style ? _self.style : style // ignore: cast_nullable_to_non_nullable
+as AsyncValue<Style>,
   ));
 }
 
