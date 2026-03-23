@@ -1,3 +1,7 @@
+## 0.2.0-dev
+- Use vector tile
+- Add food and wine festival 2026 menu
+
 ## 0.1.0
 - Support ios
 - Make event selectable
