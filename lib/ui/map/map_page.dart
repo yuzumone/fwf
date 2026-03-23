@@ -23,7 +23,17 @@ class MapPage extends StatelessWidget {
         child: Row(
           spacing: 16.0,
           children: [
-            Flexible(flex: 1, child: Image.memory(base64Decode(menu.image))),
+            Flexible(
+              flex: 1,
+              child: SizedBox.square(
+                dimension: 60.0,
+                child: Image.memory(
+                  base64Decode(menu.image),
+                  fit: BoxFit.contain,
+                  filterQuality: FilterQuality.high,
+                ),
+              ),
+            ),
             Flexible(
               flex: 4,
               child: Column(
@@ -31,10 +41,11 @@ class MapPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(menu.name),
-                  Text(
-                    menu.text.trim(),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  if (menu.text.isNotEmpty)
+                    Text(
+                      menu.text.trim(),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   Text(
                     '¥${menu.value}',
                     style: Theme.of(context).textTheme.bodySmall,
@@ -91,7 +102,16 @@ class MapPage extends StatelessWidget {
             child: Row(
               children: s.menus
                   .map(
-                    (m) => Expanded(child: Image.memory(base64Decode(m.image))),
+                    (m) => Expanded(
+                      child: SizedBox.square(
+                        dimension: 40.0,
+                        child: Image.memory(
+                          base64Decode(m.image),
+                          fit: BoxFit.contain,
+                          filterQuality: FilterQuality.high,
+                        ),
+                      ),
+                    ),
                   )
                   .toList(),
             ),

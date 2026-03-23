@@ -26,13 +26,21 @@ class ListPage extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, i) => ListTile(
                 onTap: () => openCustomTab(context, shop.menus[i].link),
-                leading: Image.memory(base64Decode(shop.menus[i].image)),
+                leading: SizedBox.square(
+                  dimension: 72.0,
+                  child: Image.memory(
+                    base64Decode(shop.menus[i].image),
+                    fit: BoxFit.contain,
+                    filterQuality: FilterQuality.high,
+                  ),
+                ),
                 title: Text(shop.menus[i].name),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 4.0,
                   children: [
-                    Text(shop.menus[i].text.trim()),
+                    if (shop.menus[i].text.isNotEmpty)
+                      Text(shop.menus[i].text.trim()),
                     Text('¥${shop.menus[i].value}'),
                   ],
                 ),
