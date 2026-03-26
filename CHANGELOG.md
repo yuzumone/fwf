@@ -1,4 +1,4 @@
-## 0.2.0-dev
+## 0.2.0
 - Use vector tile
 - Add food and wine festival 2026 menu
 
